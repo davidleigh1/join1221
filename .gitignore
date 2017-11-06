@@ -17,6 +17,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Project BAK and Notes folders
+.BAK DO NOT SYNC
+dev_notes
+
+
 # =========================
 # Operating System Files
 # =========================
