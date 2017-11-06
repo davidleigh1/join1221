@@ -1,4 +1,4 @@
---
+/*--
 	Author: W3layouts
 	Author URL: http://w3layouts.com
 	License: Creative Commons Attribution 3.0 Unported
@@ -101,9 +101,9 @@ body {
 	font-family: 'Almoni-Dl','Roboto', sans-serif;
 	text-align: center;
 	/*background-color: #333; white*/
-	/*background-color: #ff7200; orange */ 
-	/*background-color: #f26822; dark-orange */ 
-	background-color: #ff7200; 
+	/*background-color: #ff7200; orange */
+	/*background-color: #f26822; dark-orange */
+	background-color: #ff7200;
 	direction: rtl;
 	height: 100%;
 }
@@ -111,8 +111,8 @@ body {
 
 /* Background Image */
 
-body { 
-	background: url(../images/background1.jpg) no-repeat center center fixed; 
+body {
+	background: url(../images/background1.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -139,9 +139,9 @@ h1 {
 	font-weight: 800;
     color: #231f20;
 	/*color: #333; */
-	/*color: #ff7200; official orange */ 
-	/*color: #f26822; dark-orange */     
-	/*color: #d04202; dark-orange */     
+	/*color: #ff7200; official orange */
+	/*color: #f26822; dark-orange */
+	/*color: #d04202; dark-orange */
 	color: #FFF;
 }
 
@@ -150,7 +150,8 @@ h1 {
 	margin: 50px auto;
 	/*background-color: #38ecd1;*/
 	background-color: #ff7200;
-	color:white;	
+	color:white;
+	border-radius: 10px;
 }
 
 
@@ -171,6 +172,7 @@ h1 {
 	/*-- agileits --*/
 	/*float: left;*/
 	float: right;
+	padding: 4px;
 }
 
 .w3imageaits img.user-logo {
@@ -183,7 +185,7 @@ h2 {
 	font-size: 25px;
 	margin-bottom: 20px;
     margin-left: 40px;
-    margin-right: 40px;	
+    margin-right: 40px;
 }
 
 .w3imageaits p {
@@ -195,6 +197,55 @@ h2 {
 	background-color: #FFF;
 	padding-top: 25px;
 }
+
+/* INFO (LOWER) DIV */
+
+.info-div {
+}
+
+.info-div-container {
+    padding: 10px;
+    text-align: right;
+}
+
+.faq {
+}
+
+span.faq-q {
+	font-size: 16px;
+	padding-top: 15px;
+    display: block;
+    font-weight: bold;
+    color: #ff7200;
+}
+
+span.faq-a {
+	font-size: 16px;
+    display: block;
+    color: #000000 green;
+}
+
+.advert {
+	padding: 10px;
+	background-color: white;
+    border: 3px #ff7200 solid;
+}
+
+img.army-medic-2017-flyer {
+	max-width: 100%;
+}
+
+.tests a {
+    background-color: #ff7200;
+    border: 1px #ff7200 solid;
+    padding: 2px 5px;
+    line-height: 50px;
+    color: white;
+    border-radius: 5px;
+}
+
+
+/* FORM */
 
 input[type="text"], select, input[type="search"], input.fill.email, input[type="password"], input.fill.tel, input#datepicker1, select:focus {
 	padding: 7px 0;
@@ -276,7 +327,7 @@ input:out-of-range {
 	border: none;
 	border-bottom: 1px solid #777;
 	/*	font-family: 'Almoni-Dl','Montserrat', sans-serif; */
-	font-size: 20px; 
+	font-size: 20px;
 	color: #ff7200; 	 /* Official Orange */
 	outline: none;
 	margin-bottom: 20px;
@@ -391,7 +442,7 @@ input[type="submit"], button.submit {
 
 input[type="submit"]:hover, button.submit:hover {
 	color: #ff7200;					/* official orange */
-	background-color: #FFF; 		/* White */	
+	background-color: #FFF; 		/* White */
     border: 1px solid #ff7200;		/* official orange */
 }
 
@@ -541,7 +592,7 @@ dialog {
     outline: 0;
     -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
     box-shadow: 0 3px 9px rgba(0,0,0,.5);
-}  
+}
 
 .close-dialog-button {
 	padding: 10px 30px;
@@ -704,7 +755,7 @@ span.loading-icon {
 
 @media screen and (max-width: 1080px) {
 	h1 {
-		font-size: 40px; 
+		font-size: 40px;
 		/*margin: 50px 0;*/
 		margin: 25px 0;
 	}
@@ -756,6 +807,10 @@ span.loading-icon {
 	.w3imageaits p {
 		font-size: 14px;
 	}
+	span.faq-q, span.faq-a {
+		font-size: 16px;
+		/* background-color: rgb(167, 122, 167); */
+	}
 }
 
 @media screen and (max-width: 640px) {
@@ -788,6 +843,10 @@ span.loading-icon {
 	.w3lsfooteragileits p {
 		font-size: 14px;
 	}
+	span.faq-q, span.faq-a {
+		font-size: 16px;
+		/* background-color: pink; */
+	}
 }
 
 @media screen and (max-width: 480px) {
@@ -815,6 +874,9 @@ span.loading-icon {
 	h1 {
 		font-size: 28px;
 	}
+	/* span.faq-q, span.faq-a {
+		font-size: 33px;
+	} */
 }
 
 @media screen and (max-width: 320px) {
@@ -825,6 +887,9 @@ span.loading-icon {
 		font-size: 22px;
 		margin-bottom: 15px;
 	}
+	/* span.faq-q, span.faq-a {
+		font-size: 33px;
+	} */
 }
 
 

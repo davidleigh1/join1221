@@ -1,4 +1,4 @@
-console.log( "scripts loaded" );
+console.log("scripts loaded");
 
 /* DECLARE VARS */
 
@@ -13,26 +13,26 @@ var regform = {
 
 /* EVENT HANDLERS */
 
-jQuery(document).ready(function() {
-	console.log( "document loaded" );
+jQuery(document).ready(function () {
+	console.log("document loaded");
 
 	/* Hack to change style of the default city option to match other placeholders */
-	var $select = jQuery('select');	
+	var $select = jQuery('select');
 	$select.on({
-		click: function(ev) {
+		click: function (ev) {
 			// Handle click...
 			jQuery(this).removeClass('placeholder');
 		},
-		focus: function(ev) {
+		focus: function (ev) {
 			// Handle click...
 			// console.log('focus',ev);
 			jQuery(this).removeClass('placeholder');
-		}			
+		}
 	});
 
-	var $radio = jQuery('input[type=radio].is-qualified');	
+	var $radio = jQuery('input[type=radio].is-qualified');
 	$radio.on({
-		change: function(ev) {
+		change: function (ev) {
 			// Handle click...
 			// console.log('click',ev);
 			jQuery('.is-qualified').removeClass('placeholder');
@@ -40,35 +40,35 @@ jQuery(document).ready(function() {
 			jQuery("input#experience")[0].required = false;
 
 			// Show 'Notes' field if 'Yes' is selected
-			if ( jQuery("input[name='is-qualified']:checked").val() == "true" ) {
+			if (jQuery("input[name='is-qualified']:checked").val() == "true") {
 				jQuery("input#experience").show();
 				jQuery("input#experience").focus();
 				jQuery("input#experience")[0].required = true;
 			}
 
 		},
-		active: function(ev) {
+		active: function (ev) {
 			// Handle click...
 			// console.log('active',ev);
 			jQuery('.is-qualified').removeClass('placeholder');
 		},
-		focus: function(ev) {
+		focus: function (ev) {
 			// Handle click...
 			// console.log('focus',ev);
 			jQuery('.is-qualified').removeClass('placeholder');
-		}			
+		}
 	});
 
 
 	/* Submission Dialog */
-	// (function() {  
-	// 	var dialog = document.getElementById('popup_confirmation');  
-	// 	document.getElementById('show_dialog').onclick = function() {  
-	// 		dialog.show();  
-	// 	};  
-	// 	document.getElementById('close_dialog').onclick = function() {  
-	// 		dialog.close();  
-	// 	};  
+	// (function() {
+	// 	var dialog = document.getElementById('popup_confirmation');
+	// 	document.getElementById('show_dialog').onclick = function() {
+	// 		dialog.show();
+	// 	};
+	// 	document.getElementById('close_dialog').onclick = function() {
+	// 		dialog.close();
+	// 	};
 	// })();
 
 	// dialog.close();
@@ -77,10 +77,10 @@ jQuery(document).ready(function() {
 	$form = jQuery("form#registration-form");
 
 	/* Prepare for geolocation */
-	init_ip ();
+	init_ip();
 });
 
-$("form#registration-form").on("submit", function(evt){
+$("form#registration-form").on("submit", function (evt) {
 	console.log("submit event handler! return false;");
 	evt.preventDefault();
 	submitNow();
@@ -90,18 +90,18 @@ $("form#registration-form").on("submit", function(evt){
 /* FUNCTIONS */
 
 
-modalNotify = function(content="dynamic content", type="info", title="איחוד הצלה - סניף תל אביב", autoCloseMS, hideCloseButton=false ) {
+function modalNotify(content = "dynamic content", type = "info", title = "איחוד הצלה - סניף תל אביב", autoCloseMS, hideCloseButton = false) {
 	jQuery("#modal-title").html(title);
 	jQuery("#modal-body").html(content);
 	jQuery('#myModal1').modal('show');
 
-	if ( hideCloseButton && hideCloseButton == true ){
-		jQuery('.modal-footer').hide();	
+	if (hideCloseButton && hideCloseButton == true) {
+		jQuery('.modal-footer').hide();
 	} else {
-		jQuery('.modal-footer').show();	
-	} 
+		jQuery('.modal-footer').show();
+	}
 
-	if ( autoCloseMS ) {
+	if (autoCloseMS) {
 		setTimeout(function () {
 			jQuery('#myModal1').modal('hide');
 		}, autoCloseMS);
@@ -126,9 +126,9 @@ init_ip = function (argument) {
 	//	  "metro_code": 0
 	// }
 
-	jQuery.getJSON('//freegeoip.net/json/?callback=?', function(returnedData,b,c) {
+	jQuery.getJSON('//freegeoip.net/json/?callback=?', function (returnedData, b, c) {
 		// console.log(returnedData,b,c);
-		if (b && b == "success"){
+		if (b && b == "success") {
 			regform.ip_response = true;
 			regform.ip_object = returnedData;
 			// console.log(JSON.stringify(returnedData, null, 2));
@@ -141,22 +141,22 @@ init_ip = function (argument) {
 	});
 };
 
-getTidyJSON = function(formObject) {
+getTidyJSON = function (formObject) {
 	jQuery("#show-form-status").append("Preparing form data...\<br\>");
-	console.log("getTidyJSON()");	
+	console.log("getTidyJSON()");
 	var tidyjson = formObject.serializeObject();
-	if ( !tidyjson.first_name && !tidyjson.family_name ) {
-		tidyjson.first_name = tidyjson.full_name.substr( 0, tidyjson.full_name.indexOf(" ") );
-		tidyjson.family_name = tidyjson.full_name.substr( tidyjson.full_name.indexOf(" ") + 1 );
+	if (!tidyjson.first_name && !tidyjson.family_name) {
+		tidyjson.first_name = tidyjson.full_name.substr(0, tidyjson.full_name.indexOf(" "));
+		tidyjson.family_name = tidyjson.full_name.substr(tidyjson.full_name.indexOf(" ") + 1);
 	}
 	regform.applicant_name = tidyjson.first_name || tidyjson.full_name;
 
 	/* Experience */
 	tidyjson.is_qualified = jQuery('input[name=is-qualified]:checked').val();
 	/* Check if this live or development form submission */
-	tidyjson.form_type = ( !document.domain || document.domain == "localhost" ) ? "development" : document.domain;
+	tidyjson.form_type = (!document.domain || document.domain == "localhost") ? "development" : document.domain;
 	/* TODO Referrer info */
-	tidyjson.referrer = document.location.search.substring(0,100) || "--";
+	tidyjson.referrer = document.location.search.substring(0, 100) || "--";
 	/* Geolocation info */
 	tidyjson.user_geo = regform.user_geo;
 
@@ -164,30 +164,30 @@ getTidyJSON = function(formObject) {
 	return tidyjson;
 };
 
-init_jquery_talkahead = function(inputSelector) {
+init_jquery_talkahead = function (inputSelector) {
 	/* Documentation: http://www.runningcoder.org/jquerytypeahead/documentation/ */
-    var data = {
-    israel_cities: ["תל אביב-יפו", "אום אל-פחם", "אופקים", "אור יהודה", "אור עקיבא", "אילת", "אלעד", "אריאל", "אשדוד", "אשקלון", "באקה אל-גרבייה", "באר שבע", "בית שאן", "בית שמש", "ביתר עילית", "בני ברק", "בת ים", "גבעת שמואל", "גבעתיים", "דימונה", "הוד השרון", "הרצליה", "חדרה", "חולון", "חיפה", "טבריה", "טייבה", "טירה", "טירת כרמל", "טמרה", "יבנה", "יהוד-מונוסון", "יקנעם עילית", "ירושלים", "כפר יונה", "כפר סבא", "כפר קאסם", "כרמיאל", "לוד", "מגדל העמק", "מודיעין עילית", "מודיעין- מכבים- רעות", "מעלה אדומים", "מעלות תרשיחא", "נהריה", "נס ציונה", "נצרת", "נצרת עילית", "נשר", "נתיבות", "נתניה", "סח'נין", "עכו", "עפולה", "עראבה", "ערד", "פתח תקווה", "צפת", "קלנסווה", "קריית אונו", "קריית אתא", "קריית ביאליק", "קריית גת", "קריית ים", "קריית מוצקין", "קריית מלאכי", "קריית שמונה", "ראש העין", "ראשון לציון", "רהט", "רחובות", "רמלה", "רמת גן", "רמת השרון", "רעננה", "שדרות", "שפרעם", "Other"]
-    };
+	var data = {
+		israel_cities: ["תל אביב-יפו", "אום אל-פחם", "אופקים", "אור יהודה", "אור עקיבא", "אילת", "אלעד", "אריאל", "אשדוד", "אשקלון", "באקה אל-גרבייה", "באר שבע", "בית שאן", "בית שמש", "ביתר עילית", "בני ברק", "בת ים", "גבעת שמואל", "גבעתיים", "דימונה", "הוד השרון", "הרצליה", "חדרה", "חולון", "חיפה", "טבריה", "טייבה", "טירה", "טירת כרמל", "טמרה", "יבנה", "יהוד-מונוסון", "יקנעם עילית", "ירושלים", "כפר יונה", "כפר סבא", "כפר קאסם", "כרמיאל", "לוד", "מגדל העמק", "מודיעין עילית", "מודיעין- מכבים- רעות", "מעלה אדומים", "מעלות תרשיחא", "נהריה", "נס ציונה", "נצרת", "נצרת עילית", "נשר", "נתיבות", "נתניה", "סח'נין", "עכו", "עפולה", "עראבה", "ערד", "פתח תקווה", "צפת", "קלנסווה", "קריית אונו", "קריית אתא", "קריית ביאליק", "קריית גת", "קריית ים", "קריית מוצקין", "קריית מלאכי", "קריית שמונה", "ראש העין", "ראשון לציון", "רהט", "רחובות", "רמלה", "רמת גן", "רמת השרון", "רעננה", "שדרות", "שפרעם", "Other"]
+	};
 };
 
 isFormValid = function (eventLabel) {
-	if ( !jQuery("#registration-form")[0].checkValidity() ){
+	if (!jQuery("#registration-form")[0].checkValidity()) {
 		regform.form_validated = false;
 	} else {
 		regform.form_validated = true;
 	}
-	console.log("isFormValid("+eventLabel+") = " + regform.form_validated);
+	console.log("isFormValid(" + eventLabel + ") = " + regform.form_validated);
 	return regform.form_validated;
 };
 
 submitNow = function (submitTrigger) {
-	jQuery("#show-form-status").append("submitNow("+submitTrigger+")\<br\>");
-	console.log("submitNow("+submitTrigger+")");
+	jQuery("#show-form-status").append("submitNow(" + submitTrigger + ")\<br\>");
+	console.log("submitNow(" + submitTrigger + ")");
 	// alert("submitNow("+submitTrigger+")");
 
 	/* Prevent submission unless all required fields are complete */
-	if ( !isFormValid() ) {
+	if (!isFormValid()) {
 		jQuery("#show-form-status").append("Submit Click > form_validated == false\<br\>");
 		console.log("FORM NOT VALID");
 		return;
@@ -203,12 +203,12 @@ submitNow = function (submitTrigger) {
 		method: "GET",
 		dataType: "json",
 		data: getTidyJSON($form),
-		beforeSend: function(jqXHR, settings) {
+		beforeSend: function (jqXHR, settings) {
 			doSendingActions(jqXHR, settings);
 		}
-	}).done(function(data) {
+	}).done(function (data) {
 		doSuccessActions(data, regform);
-	}).fail(function(xhr) {
+	}).fail(function (xhr) {
 		doFailActions(data, regform);
 	});
 };
@@ -217,25 +217,29 @@ doSendingActions = function (jqXHR, settings = {}) {
 	jQuery("#show-form-status").append("Preparing to send data...\<br\>");
 	console.log("beforeSend", settings);
 	var notifyHTML = "<span class='loading-icon'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></span><span class='loading-text'>מגיש פרטים כעת... נא לחכות כמה שניות</span>";
-	modalNotify( notifyHTML , "Sending", "מגיש פרטים", false, true );
+	modalNotify(notifyHTML, "Sending", "מגיש פרטים", false, true);
 };
 
 doFailActions = function (xhr, regform = {}) {
 	console.log("fail", xhr);
 	jQuery("#show-form-status").append("Submission failed\<br\>");
-	var failMessage = "זה נראה כאילו משהו לא עובד. בבקשה נסה שוב.<br><br>אם זה לא מצליח, אנא שלח לנו את הפרטים שלך:<br><a href='mailto:davidl@1221tlv.org.il' target='_blank'>davidl@1221tlv.org.il</a>";
-	modalNotify( failMessage , "error", "אוי וי!", 12000 );
+	var failMessage = "זה נראה כאילו משהו לא עובד. בבקשה נסה שוב.<br><br>אם זה לא מצליח, אנא שלח לנו את הפרטים שלך:<br><a href='mailto:tlv@1221tlv.org.il' target='_blank'>tlv@1221tlv.org.il</a>";
+	modalNotify(failMessage, "error", "אוי וי!", 12000);
 };
 
 doSuccessActions = function (data, regform = {}) {
 	console.log("done!", doneMessage, data);
 	jQuery("#show-form-status").append("Submission successful!\<br\>");
-	// alert(doneMessage);
-	jQuery("#registration-form")[0].reset();
-	// var applicant_name = (regform.applicant_name) ? (" " + regform.applicant_name) :  "";
-	// var doneMessage = "תודה"+applicant_name+", הפרטים שלך נשלחו בהצלחה!";
-	// modalNotify( doneMessage , "success", "איחוד הצלה - סניף תל אביב", 8000 );
-	var applicant_name = (regform.applicant_name) ? (" " + regform.applicant_name) :  "";
+	if (jQuery("#registration-form").length) {
+		jQuery("#registration-form")[0].reset();
+	}
+	jQuery(".deleteElementOnSubmit").remove();
+	window.scrollTo(0, 0);
+	var applicant_name = (regform.applicant_name) ? (" " + regform.applicant_name) : "";
 	var doneMessage = "תודה לך על התעניינותך!<br><br>מישהו מ-איחוד הצלה ייצור איתך קשר בקרוב.";
-	modalNotify( doneMessage , "success", "הפרטים שלך נשלחו בהצלחה!", 12000 );
+	modalNotify(doneMessage, "success", "הפרטים שלך נשלחו בהצלחה!", 12000);
+	jQuery(".confirmFormSubmission").html("הפרטים שלך נשלחו בהצלחה!");
+	jQuery(".confirmFormSubmission").css("padding-bottom", "5px");
+	jQuery(".formSidebarHeader").css("width", "100%");
+	jQuery(".formSidebarHeader").css("float", "center");
 };
